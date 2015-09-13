@@ -1,9 +1,10 @@
 Torrijas
 ========
 
-Torrijas is a multi-platform C++11 library for building 2d games and other graphical applications with vector graphics. It is based on NanoVG for the graphics rendering. It works on Linux, OS X and Windows.
+Torrijas is a multi-platform C++11 library for building 2d games and other graphical applications with vector graphics. 
 
-## Screenshot
+It is based on [NanoVG](http://github.com/memononen/nanovg) for the graphics rendering. 
+It works on Linux, OS X and Windows.
 
 ![screenshot of some text rendered with the sample program](/torrijas-test/images/screenshot.png?raw=true)
 
@@ -15,8 +16,8 @@ The Torrijas API is modeled loosely on Cocos2d API. If you know Cocos2d-x, you'r
 ## Build Requirements
 
 * Ubuntu 14.04+
-* or Mac OS X 10.9+ with Xcode 6+
-* or Windows 7+ with Visual Studio 2015+
+	* or Mac OS X 10.9+ with Xcode 6+
+	* or Windows 7+ with Visual Studio 2015+
 * CMake 2.8+
 * GLFW3 (in Windows it should be located in C:/glfw)
 * GLEW (in Windows it should be located in C:/glew)
