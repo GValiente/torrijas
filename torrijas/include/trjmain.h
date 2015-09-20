@@ -31,11 +31,11 @@ void main(Function function)
 {
     try
     {
-        trj::Application application;
+        Application application;
 
         function();
     }
-    catch(const trj::ApplicationClosedException&)
+    catch(const ApplicationClosedException&)
     {
     }
 }
@@ -45,11 +45,11 @@ void main(ApplicationConfig config, Function function)
 {
     try
     {
-        trj::Application application(std::move(config));
+        Application application(std::move(config));
 
         function();
     }
-    catch(const trj::ApplicationClosedException&)
+    catch(const ApplicationClosedException&)
     {
     }
 }

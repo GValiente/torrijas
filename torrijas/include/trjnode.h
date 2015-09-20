@@ -123,6 +123,8 @@ protected:
 
     void updateTransform(RenderContext& renderContext);
 
+    void releaseRenderCache();
+
 public:
     static Ptr<Node> create()
     {

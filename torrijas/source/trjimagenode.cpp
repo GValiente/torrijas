@@ -55,11 +55,6 @@ Rect ImageNode::generateBoundingBox()
     return boundingBox;
 }
 
-bool ImageNode::renderCacheAvailable(const RenderContext& renderContext) const
-{
-    return Node::renderCacheAvailable(renderContext) && areEquals(renderContext.getOpacity(), 1);
-}
-
 void ImageNode::renderItself(RenderContext& renderContext)
 {
     NVGcontext& nanoVgContext = renderContext.getNanoVgContext();

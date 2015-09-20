@@ -274,7 +274,6 @@ void Shape::render(NVGcontext& nanoVgContext) const
         case Type::CLOSE_PATH:
         {
             nvgClosePath(&nanoVgContext);
-            return;
         }
         break;
 

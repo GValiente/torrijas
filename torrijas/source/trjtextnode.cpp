@@ -85,7 +85,7 @@ Rect TextNode::generateBoundingBox()
 
 bool TextNode::renderCacheAvailable(const RenderContext& renderContext) const
 {
-    return Node::renderCacheAvailable(renderContext) && areEquals(renderContext.getOpacity(), 1);
+    return mTexts.empty() && Node::renderCacheAvailable(renderContext);
 }
 
 void TextNode::renderItself(RenderContext& renderContext)

@@ -255,7 +255,6 @@ void Node::render(RenderContext& renderContext)
             float oldOpacity = renderContext.getOpacity();
             float newOpacity = oldOpacity * mOpacity;
             renderContext.setOpacity(newOpacity);
-            nvgGlobalAlpha(&nanoVgContext, newOpacity);
 
             bool blendColorEnabled = isPositive(mBlendColorFactor);
             if(blendColorEnabled)
@@ -291,7 +290,7 @@ void Node::render(RenderContext& renderContext)
                             }
                             else
                             {
-                                mRenderCache = &(trj::priv::DisplayListManager::pull());
+                                mRenderCache = &(priv::DisplayListManager::pull());
                             }
 
                             nvgSave(&nanoVgContext);
@@ -305,14 +304,19 @@ void Node::render(RenderContext& renderContext)
 
                         nvgSave(&nanoVgContext);
                         nvgScale(&nanoVgContext, 1 / finalScaleX, 1 / finalScaleY);
+                        nvgGlobalAlpha(&nanoVgContext, newOpacity);
                         nvgDrawDisplayList(&nanoVgContext, static_cast<NVGdisplayList*>(mRenderCache));
                         nvgRestore(&nanoVgContext);
                     }
                     else
                     {
+                        releaseRenderCache();
+
+                        nvgGlobalAlpha(&nanoVgContext, newOpacity);
                         renderItself(renderContext);
                     }
                 #else
+                    nvgGlobalAlpha(&nanoVgContext, newOpacity);
                     renderItself(renderContext);
                 #endif
 
@@ -421,6 +425,19 @@ void Node::updateTransform(RenderContext& renderContext)
     }
 }
 
+void Node::releaseRenderCache()
+{
+    #ifdef TRJ_CFG_ENABLE_RENDER_CACHE
+        if(mRenderCache)
+        {
+            NVGdisplayList* displayList = static_cast<NVGdisplayList*>(mRenderCache);
+            priv::DisplayListManager::push(*displayList);
+            mRenderCache = nullptr;
+            mInvalidateRenderCache = true;
+        }
+    #endif
+}
+
 Node& Node::getRootNode() noexcept
 {
     return Application::getRootNode();
@@ -429,15 +446,7 @@ Node& Node::getRootNode() noexcept
 Node::~Node()
 {
     clearChildren();
-
-    #ifdef TRJ_CFG_ENABLE_RENDER_CACHE
-        if(mRenderCache)
-        {
-            NVGdisplayList* displayList = static_cast<NVGdisplayList*>(mRenderCache);
-            trj::priv::DisplayListManager::push(*displayList);
-            mRenderCache = nullptr;
-        }
-    #endif
+    releaseRenderCache();
 }
 
 const Rect& Node::getBoundingBox()

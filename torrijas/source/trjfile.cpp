@@ -78,7 +78,7 @@ namespace
             char absolutePathCharArray[MAX_PATH];
             if(! GetFullPathName(path.getCharArray(), MAX_PATH, absolutePathCharArray, NULL))
             {
-                throw trj::Exception(__FILE__, __LINE__, "GetFullPathName failed");
+                throw Exception(__FILE__, __LINE__, "GetFullPathName failed");
             }
 
             std::string absolutePath(absolutePathCharArray);
@@ -88,7 +88,7 @@ namespace
             char* absolutePathCharArray = realpath(path.getCharArray(), nullptr);
             if(! absolutePathCharArray)
             {
-                throw trj::Exception(__FILE__, __LINE__, "realpath failed");
+                throw Exception(__FILE__, __LINE__, "realpath failed");
             }
 
             std::string absolutePath(absolutePathCharArray);

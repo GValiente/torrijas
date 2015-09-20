@@ -72,6 +72,9 @@
 #include "private/trjimagemanager.h"
 #include "private/trjdisplaylistmanager.h"
 
+namespace trj
+{
+
 namespace
 {
     #ifdef TRJ_CFG_ENABLE_GLEW
@@ -86,12 +89,9 @@ namespace
         stringStream << ": ";
         stringStream << desc;
 
-        throw trj::Exception(__FILE__, __LINE__, stringStream.str());
+        throw Exception(__FILE__, __LINE__, stringStream.str());
     }
 }
-
-namespace trj
-{
 
 Application* Application::smInstance = nullptr;
 
@@ -378,8 +378,8 @@ Application::Application(ApplicationConfig config) :
         }
     }
 
-    mImpl->keyboard = new Keyboard(mImpl->window);
-    mImpl->mouse = new Mouse(mImpl->window);
+    mImpl->keyboard.reset(new Keyboard(mImpl->window));
+    mImpl->mouse.reset(new Mouse(mImpl->window));
     glfwMakeContextCurrent(mImpl->window);
 
     #ifdef TRJ_CFG_ENABLE_GLEW
@@ -433,10 +433,10 @@ Application::Application(ApplicationConfig config) :
     glfwSwapInterval(appConfig.isVSyncEnabled());
 
     #ifdef TRJ_CFG_ENABLE_RENDER_CACHE
-        mImpl->displayListManager = new priv::DisplayListManager();
+        mImpl->displayListManager.reset(new priv::DisplayListManager());
     #endif
 
-    mImpl->font = new Font(appConfig.getDefaultFontName(), appConfig.getDefaultFontFilePath());
+    mImpl->font.reset(new Font(appConfig.getDefaultFontName(), appConfig.getDefaultFontFilePath()));
     mImpl->node = Node::create();
 
     TRJ_ASSERT(isPositive(getScreenHeight()), "Invalid logical screen height");

@@ -34,7 +34,7 @@ namespace trj
 
 ImageData ImageData::getScreenshot()
 {
-    return trj::Application::getScreenshot();
+    return Application::getScreenshot();
 }
 
 ImageData::ImageData(int width, int height, bool clear) :

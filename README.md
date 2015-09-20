@@ -15,7 +15,7 @@ The Torrijas API is modeled loosely on Cocos2d API. If you know Cocos2d-x, you'r
 
 ## Build Requirements
 
-* Ubuntu 14.04+
+* Ubuntu 14.04+ with gcc 4.8+
 	* or Mac OS X 10.9+ with Xcode 6+
 	* or Windows 7+ with Visual Studio 2015+
 * CMake 2.8+
@@ -38,6 +38,14 @@ $ ./torrijas-test
 
 Well... IT WORKS, but I have it working with Qt Creator, because my Visual Studio free license has expired u_u
 
+## Expected build folder
+
+By default, Torrijas expects to be built in a child folder of the main torrijas folder.
+
+If you build it elsewhere, you'll get a nice crash because it isn't going to find the default font file.
+
+You can change the default font file path in the ApplicationConfig class.
+
 ## Create your own project
 
 Make a copy of the torrijas-template folder, rename it, add it to the last line of the main CMakeLists.txt and you should be good to go.
@@ -55,7 +63,7 @@ Make a copy of the torrijas-template folder, rename it, add it to the last line 
 * FrameBuffer effects
 * Mouse / Keyboard support
 * Open Source Commercial Friendly (zlib): compatible with open and closed source projects
-* OpenGL 2.1 based
+* OpenGL 2+ based
 
 ## API Reference
 
@@ -72,3 +80,22 @@ The library is licensed under [zlib license](LICENSE.txt)
 * Uses [stb_truetype](http://nothings.org) (or, optionally, [freetype](http://freetype.org)) for font rendering.
 * Uses [stb_image](http://nothings.org) for image loading and writing.
 * Uses [GLEW](http://glew.sourceforge.net/) for wrangling OpenGL extensions or something.
+
+## Change log
+
+v0.1.2
+
+* OPTIMIZATION: Images with opacity are now rendered with display lists if they are enabled.
+* OPTIMIZATION: Display lists are released when they are not needed anymore.
+* FIX: Text with display lists enabled can be rendered incorrectly if the glyph atlas grows.
+* OTHER: Expected build folder info added to readme.
+* OTHER: Some CLion warnings removed.
+
+v0.1.1
+
+* FIX: Linux build.
+
+v0.1
+
+* Initial release.
+

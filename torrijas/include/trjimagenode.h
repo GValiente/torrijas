@@ -46,8 +46,6 @@ protected:
 
     Rect generateBoundingBox() override;
 
-    bool renderCacheAvailable(const RenderContext& renderContext) const override;
-
     void renderItself(RenderContext& renderContext) override;
 
 public:
